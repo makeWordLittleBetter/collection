@@ -1,15 +1,23 @@
 #include <stdio.h>
 
+/*
+ ①快速排序递归实现;
+ */
 void quickSort(int *a, int start, int end)
 {
 	int keyValue, left, right;
     
+    //no need to compare
 	if(start >= end)  return;
     
-    left = start;
-    right = end;
+    //set left and right indicator
+    left        = start;
+    right       = end;
+    
+    //set the base value
 	keyValue	= a[right];
-
+    
+    //classify
 	while(left < right)
 	{
 		while((a[left] <= keyValue) && (left < right))
@@ -17,18 +25,23 @@ void quickSort(int *a, int start, int end)
 			++left;
 		}
 		a[right] = a[left];
-
+        //note: after up line a[left] is invalid, and can be replace.
+        
 		while((a[right] >= keyValue) && (left < right))
 		{
 			--right;
 		}
 		a[left] = a[right];
+        //note: after up line a[right] is invalid, and can be replace.
 	}
 
-	//left == right
+	//put keyValue on its position
     a[left] = keyValue;
     
+    //quick sort front part start ~ left-1
 	quickSort(a, start, left-1);
+    
+    //quick sort back part  left+1 ~ end
 	quickSort(a, left+1, end);
 }
 
